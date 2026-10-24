@@ -1,0 +1,27 @@
+name: Bug report
+description: Something does not work as expected
+labels: [bug]
+body:
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened?
+      description: What did you expect, and what happened instead?
+    validations:
+      required: true
+  - type: textarea
+    id: doctor
+    attributes:
+      label: Output of `eyemouse doctor`
+      render: text
+    validations:
+      required: true
+  - type: input
+    id: system
+    attributes:
+      label: OS, Python version, camera model
+  - type: textarea
+    id: logs
+    attributes:
+      label: Log (run with `-v --log-file eyemouse.log`)
+      render: text

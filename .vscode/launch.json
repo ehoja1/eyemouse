@@ -1,0 +1,38 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "EyeMouse: run (dry-run + preview)",
+      "type": "debugpy",
+      "request": "launch",
+      "module": "eyemouse",
+      "args": ["run", "--dry-run", "--preview", "-v"],
+      "console": "integratedTerminal",
+      "justMyCode": true
+    },
+    {
+      "name": "EyeMouse: run (real mouse + preview)",
+      "type": "debugpy",
+      "request": "launch",
+      "module": "eyemouse",
+      "args": ["run", "--preview"],
+      "console": "integratedTerminal"
+    },
+    {
+      "name": "EyeMouse: calibrate",
+      "type": "debugpy",
+      "request": "launch",
+      "module": "eyemouse",
+      "args": ["calibrate", "-v"],
+      "console": "integratedTerminal"
+    },
+    {
+      "name": "EyeMouse: doctor",
+      "type": "debugpy",
+      "request": "launch",
+      "module": "eyemouse",
+      "args": ["doctor"],
+      "console": "integratedTerminal"
+    }
+  ]
+}

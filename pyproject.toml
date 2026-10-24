@@ -1,0 +1,83 @@
+[build-system]
+requires = ["setuptools>=77", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "eyemouse"
+dynamic = ["version"]
+description = "Hands-free mouse control: move the cursor with your eyes and click with three quick blinks, using only a webcam."
+readme = "README.md"
+requires-python = ">=3.10"
+license = "MIT"
+license-files = ["LICENSE"]
+authors = [{ name = "EyeMouse contributors" }]
+keywords = ["eye tracking", "gaze", "accessibility", "hands-free", "mouse", "webcam", "mediapipe"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: End Users/Desktop",
+    "Intended Audience :: Developers",
+    "Operating System :: Microsoft :: Windows",
+    "Operating System :: MacOS",
+    "Operating System :: POSIX :: Linux",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Desktop Environment",
+    "Topic :: Scientific/Engineering :: Human Machine Interfaces",
+]
+dependencies = [
+    "numpy>=1.24",
+    "platformdirs>=3.10",
+    "tomli>=2.0; python_version < '3.11'",
+]
+
+[project.optional-dependencies]
+# Camera + face/iris landmark detection.
+vision = ["opencv-python>=4.8", "mediapipe>=0.10.14"]
+# Real mouse control (not needed for --dry-run).
+control = ["pyautogui>=0.9.54"]
+# Everything needed to actually use the application.
+all = ["opencv-python>=4.8", "mediapipe>=0.10.14", "pyautogui>=0.9.54"]
+dev = ["pytest>=8", "pytest-cov>=5", "ruff>=0.6", "mypy>=1.10"]
+
+[project.scripts]
+eyemouse = "eyemouse.cli:main"
+
+[project.urls]
+Homepage = "https://github.com/ehoja1/eyemouse"
+Issues = "https://github.com/ehoja1/eyemouse/issues"
+Changelog = "https://github.com/ehoja1/eyemouse/blob/main/CHANGELOG.md"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.dynamic]
+version = { attr = "eyemouse.__version__" }
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-ra --strict-markers"
+
+[tool.coverage.run]
+source = ["eyemouse"]
+branch = true
+
+[tool.coverage.report]
+show_missing = true
+skip_covered = true
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+src = ["src", "tests"]
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B", "UP", "SIM", "C4", "RUF"]
+
+[tool.mypy]
+python_version = "3.10"
+strict = true
+warn_unused_ignores = true
+ignore_missing_imports = true
+files = ["src/eyemouse"]

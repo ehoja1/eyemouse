@@ -1,0 +1,60 @@
+# EyeMouse configuration - every value shown here is the built-in default.
+# Copy this file, change only what you need, and pass it with:
+#     eyemouse run --config my-config.toml
+# Unknown keys are rejected on purpose, so typos never go unnoticed.
+
+[camera]
+index = 0            # which camera to use (try 1, 2 ... for external webcams)
+width = 640          # a modest resolution is faster and just as accurate for eyes
+height = 480
+fps = 30
+
+[tracking]
+# Leave model_path empty to download the MediaPipe face model once into your cache folder.
+model_path = ""
+model_url = "https://storage.googleapis.com/mediapipe-models/face_landmarker/face_landmarker/float16/latest/face_landmarker.task"
+# Optional integrity check: paste the SHA-256 of the model you trust ("eyemouse doctor" shows paths).
+model_sha256 = ""
+min_detection_confidence = 0.5
+min_presence_confidence = 0.5
+min_tracking_confidence = 0.5
+
+[blink]
+required_blinks = 3      # quick blinks needed for a click
+close_ratio = 0.70       # eyes are "closed" below baseline * close_ratio
+open_ratio = 0.80        # ...and "open" again above baseline * open_ratio
+freeze_ratio = 0.88      # cursor freezes as soon as the eyes start closing
+min_blink_s = 0.03       # shorter dips are treated as noise
+max_blink_s = 0.40       # longer closures are deliberate, not blinks
+max_gap_s = 0.50         # max pause between two blinks of the same click
+max_sequence_s = 2.0     # the whole 3-blink gesture must fit in this time
+refractory_s = 0.80      # ignore blinks this long after a click
+warmup_s = 1.5           # open-eye measurement when tracking starts
+settle_s = 0.15          # cursor stays frozen this long after the eyes reopen
+long_close_s = 2.0       # close both eyes this long to pause/resume (0 = disabled)
+baseline_alpha = 0.01
+
+[cursor]
+min_cutoff = 1.0         # lower = steadier cursor, but slower to follow
+beta = 0.01              # higher = snappier during fast eye movements
+d_cutoff = 1.0
+deadzone_px = 6.0        # ignore cursor changes smaller than this
+click_lookback_s = 0.25  # click where you were looking this long before the blinks began
+button = "left"          # left | right | middle
+yield_to_hardware_mouse = true   # auto-pause if you move the real mouse
+hardware_threshold_px = 50.0
+
+[calibration]
+grid = 4                 # grid x grid calibration points
+margin = 0.08
+settle_s = 0.7
+collect_s = 0.9
+min_samples = 10
+min_open_ear = 0.15
+ridge = 0.1
+max_retries = 2
+file = ""                # empty = per-user config folder
+
+[ui]
+preview = false
+mirror_preview = true
